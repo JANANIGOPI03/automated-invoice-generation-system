@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Products Catalog{% endblock %}
+{% block header %}Products{% endblock %}
+
+{% block content %}
+<div class="row">
+    {% for p in products %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ p.name }}</h5>
+                {% if p.description %}
+                <p class="card-text">{{ p.description }}</p>
+                {% endif %}
+                <p><strong>Price:</strong> {{ p.unit_price }}</p>
+                <a href="{% url 'invoicing:buy_product' p.product_id %}" class="btn btn-primary btn-block">Buy</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <p>No products available right now.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

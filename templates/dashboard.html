@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Total Customers -->
+    <div class="col-lg-4 col-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>{{ total_customers }}</h3>
+                <p>Total Customers</p>
+            </div>
+            <div class="icon"><i class="fas fa-users"></i></div>
+            <a href="{% url 'invoicing:list_customers' %}" class="small-box-footer">
+                Manage Customers <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Total Invoices -->
+    <div class="col-lg-4 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>{{ total_invoices }}</h3>
+                <p>Total Invoices</p>
+            </div>
+            <div class="icon"><i class="fas fa-file-invoice"></i></div>
+            <a href="{% url 'invoicing:list_invoices' %}" class="small-box-footer">
+                View Invoices <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- Pending Invoices -->
+    <div class="col-lg-4 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>{{ pending_invoices }}</h3>
+                <p>Pending Invoices</p>
+            </div>
+            <div class="icon"><i class="fas fa-hourglass-half"></i></div>
+            <a href="{% url 'invoicing:list_invoices' %}" class="small-box-footer">
+                Review Pending <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

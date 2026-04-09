@@ -1,0 +1,162 @@
+{% load static %}
+{# Capture the current URL name in a variable #}
+{% with request.resolver_match.url_name as url_name %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url 'invoicing:dashboard' %}" class="brand-link">
+        <img src="{% static 'adminlte/dist/img/AdminLTELogo.png' %}" class="brand-image img-circle elevation-3"
+            style="opacity:.8">
+        <span class="brand-text font-weight-light">InvoiceSys</span>
+    </a>
+
+    <div class="sidebar">
+        <!-- User panel -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="{% static 'adminlte/dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2"
+                    alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">
+                    {{ request.session.user_name|default:"Guest" }}
+                </a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview">
+                {% if request.session.user_role == 'admin' %}
+                {# Admin Dashboard #}
+                <li class="nav-item">
+                    <a href="{% url 'invoicing:dashboard' %}"
+                        class="nav-link{% if url_name == 'dashboard' %} active{% endif %}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+
+                {# === Customers === #}
+                <li
+                    class="nav-item has-treeview{% if url_name == 'list_customers' or url_name == 'create_customer' or url_name == 'edit_customer' or url_name == 'delete_customer' %} menu-open{% endif %}">
+                    <a href="#"
+                        class="nav-link{% if url_name == 'list_customers' or url_name == 'create_customer' or url_name == 'edit_customer' or url_name == 'delete_customer' %} active{% endif %}">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Customers
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{% url 'invoicing:list_customers' %}"
+                                class="nav-link{% if url_name == 'list_customers' %} active{% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List Customers</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'invoicing:create_customer' %}"
+                                class="nav-link{% if url_name == 'create_customer' %} active{% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Customer</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {# === Products === #}
+                <li
+                    class="nav-item has-treeview{% if url_name == 'list_products' or url_name == 'create_product' or url_name == 'edit_product' or url_name == 'delete_product' %} menu-open{% endif %}">
+                    <a href="#"
+                        class="nav-link{% if url_name == 'list_products' or url_name == 'create_product' or url_name == 'edit_product' or url_name == 'delete_product' %} active{% endif %}">
+                        <i class="nav-icon fas fa-box"></i>
+                        <p>
+                            Products
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{% url 'invoicing:list_products' %}"
+                                class="nav-link{% if url_name == 'list_products' %} active{% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List Products</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'invoicing:create_product' %}"
+                                class="nav-link{% if url_name == 'create_product' %} active{% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Add Product</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {# === Invoices === #}
+                <li
+                    class="nav-item has-treeview{% if url_name == 'list_invoices' or url_name == 'view_invoice' or url_name == 'delete_invoice' %} menu-open{% endif %}">
+                    <a href="#"
+                        class="nav-link{% if url_name == 'list_invoices' or url_name == 'view_invoice' or url_name == 'delete_invoice' %} active{% endif %}">
+                        <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                        <p>
+                            Invoices
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{% url 'invoicing:list_invoices' %}"
+                                class="nav-link{% if url_name == 'list_invoices' %} active{% endif %}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>List Invoices</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                {% elif request.session.user_role == 'customer' %}
+                <!-- Customer Dashboard -->
+                <li class="nav-item">
+                    <a href="{% url 'invoicing:customer_dashboard' %}"
+                        class="nav-link{% if url_name == 'customer_dashboard' %} active{% endif %}">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+
+                <!-- My Invoices -->
+                <li class="nav-item">
+                    <a href="{% url 'invoicing:customer_invoices' %}"
+                        class="nav-link{% if url_name == 'customer_invoices' or url_name == 'customer_invoice_detail' or url_name == 'pay_invoice' %} active{% endif %}">
+                        <i class="nav-icon fas fa-file-invoice"></i>
+                        <p>My Invoices</p>
+                    </a>
+                </li>
+
+                <!-- Products -->
+
+                <li class="nav-item">
+                    <a href="{% url 'invoicing:customer_products' %}"
+                        class="nav-link{% if url_name == 'customer_products' or url_name == 'buy_product' %} active{% endif %}">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Products</p>
+                    </a>
+                </li>
+
+                <!-- Profile -->
+                <li class="nav-item">
+                    <a href="{% url 'invoicing:customer_profile' %}"
+                        class="nav-link{% if url_name == 'customer_profile' or url_name == 'edit_profile' %} active{% endif %}">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>Profile</p>
+                    </a>
+                </li>
+
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+</aside>
+{% endwith %}

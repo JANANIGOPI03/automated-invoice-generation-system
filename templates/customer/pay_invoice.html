@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Pay Invoice #{{ invoice.invoice_id }}{% endblock %}
+{% block header %}Pay Invoice #{{ invoice.invoice_id }}{% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="method">Payment Method</label>
+        <select name="method" id="method" class="form-control">
+            <option value="Cash">Cash</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+            <option value="Credit Card">Credit Card</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-success">Submit Payment</button>
+</form>
+{% endblock %}

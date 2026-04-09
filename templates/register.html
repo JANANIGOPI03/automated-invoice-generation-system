@@ -1,0 +1,74 @@
+{% extends "auth_base.html" %}
+{% block title %}Register – Invoice System{% endblock %}
+
+{% block content %}
+<p class="login-box-msg">Create a new account</p>
+
+<form method="post" autocomplete="off">
+    {% csrf_token %}
+
+    <!-- Name -->
+    <div class="input-group mb-3">
+        {{ form.name }}
+        <div class="input-group-append">
+            <div class="input-group-text"><span class="fas fa-user"></span></div>
+        </div>
+    </div>
+    {% if form.name.errors %}
+    <div class="invalid-feedback d-block">{{ form.name.errors.0 }}</div>
+    {% endif %}
+
+    <!-- Email -->
+    <div class="input-group mb-3">
+        {{ form.email }}
+        <div class="input-group-append">
+            <div class="input-group-text"><span class="fas fa-envelope"></span></div>
+        </div>
+    </div>
+    {% if form.email.errors %}
+    <div class="invalid-feedback d-block">{{ form.email.errors.0 }}</div>
+    {% endif %}
+
+    <!-- Phone -->
+    <div class="input-group mb-3">
+        {{ form.phone }}
+        <div class="input-group-append">
+            <div class="input-group-text"><span class="fas fa-phone"></span></div>
+        </div>
+    </div>
+    {% if form.phone.errors %}
+    <div class="invalid-feedback d-block">{{ form.phone.errors.0 }}</div>
+    {% endif %}
+
+    <!-- Password -->
+    <div class="input-group mb-3">
+        {{ form.password }}
+        <div class="input-group-append">
+            <div class="input-group-text"><span class="fas fa-lock"></span></div>
+        </div>
+    </div>
+    {% if form.password.errors %}
+    <div class="invalid-feedback d-block">{{ form.password.errors.0 }}</div>
+    {% endif %}
+
+    <!-- Role -->
+    <div class="input-group mb-3">
+        {{ form.role }}
+        <div class="input-group-append">
+            <div class="input-group-text"><span class="fas fa-user-shield"></span></div>
+        </div>
+    </div>
+    {% if form.role.errors %}
+    <div class="invalid-feedback d-block">{{ form.role.errors.0 }}</div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-8">
+            <a href="{% url 'invoicing:login' %}">I already have an account</a>
+        </div>
+        <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Customers{% endblock %}
+{% block header %}Customers{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <a href="{% url 'invoicing:create_customer' %}" class="btn btn-primary btn-sm">
+      <i class="fas fa-plus"></i> New Customer
+    </a>
+  </div>
+  <div class="card-body p-0">
+    <table class="table table-hover">
+      <thead>
+        <tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for c in customers %}
+        <tr>
+          <td>{{ c.user_id }}</td>
+          <td>{{ c.name }}</td>
+          <td>{{ c.email }}</td>
+          <td>{{ c.phone }}</td>
+          <td>
+            <a href="{% url 'invoicing:edit_customer' c.user_id %}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'invoicing:delete_customer' c.user_id %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

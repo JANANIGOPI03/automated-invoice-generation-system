@@ -1,0 +1,45 @@
+{% extends "auth_base.html" %}
+{% block title %}Login – Invoice System{% endblock %}
+
+{% block content %}
+<p class="login-box-msg">Sign in to start your session</p>
+
+<form method="post" autocomplete="off">
+    {% csrf_token %}
+
+    <div class="input-group mb-3">
+        <input type="email" name="{{ form.email.name }}" value="{{ form.email.value|default:'' }}"
+            class="form-control {% if form.email.errors %}is-invalid{% endif %}" placeholder="Email">
+        <div class="input-group-append">
+            <div class="input-group-text"><span class="fas fa-envelope"></span></div>
+        </div>
+        {% if form.email.errors %}
+        <div class="invalid-feedback">
+            {{ form.email.errors.0 }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="input-group mb-3">
+        <input type="password" name="{{ form.password.name }}"
+            class="form-control {% if form.password.errors %}is-invalid{% endif %}" placeholder="Password">
+        <div class="input-group-append">
+            <div class="input-group-text"><span class="fas fa-lock"></span></div>
+        </div>
+        {% if form.password.errors %}
+        <div class="invalid-feedback">
+            {{ form.password.errors.0 }}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-8">
+            <a href="{% url 'invoicing:register' %}">Register a new account</a>
+        </div>
+        <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

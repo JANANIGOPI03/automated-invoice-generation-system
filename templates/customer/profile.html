@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}My Profile{% endblock %}
+{% block header %}My Profile{% endblock %}
+{% block content %}
+<p><strong>Name:</strong> {{ user.name }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+<p><strong>Phone:</strong> {{ user.phone }}</p>
+<p><strong>Billing Address:</strong> {{ address.billing_address }}</p>
+<a href="{% url 'invoicing:edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+{% endblock %}

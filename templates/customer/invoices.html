@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}My Invoices{% endblock %}
+{% block header %}My Invoices{% endblock %}
+{% block content %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Due</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for inv in invoices %}
+        <tr>
+            <td>{{ inv.invoice_id }}</td>
+            <td>{{ inv.invoice_date }}</td>
+            <td>{{ inv.due_date }}</td>
+            <td>{{ inv.total_amount }}</td>
+            <td>{{ inv.payment_status }}</td>
+            <td>
+                <a href="{% url 'invoicing:customer_invoice_detail' inv.invoice_id %}"
+                    class="btn btn-sm btn-info">View</a>
+                {% if inv.payment_status != 'Paid' %}
+                <a href="{% url 'invoicing:pay_invoice' inv.invoice_id %}" class="btn btn-sm btn-success">Pay</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No invoices yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

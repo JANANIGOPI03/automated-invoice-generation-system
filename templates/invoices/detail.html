@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Invoice #{{ invoice.invoice_id }}{% endblock %}
+{% block header %}Invoice View{% endblock %}
+{% block content %}
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Invoice #{{ invoice.invoice_id }}</h3>
+        <div class="card-tools">
+            <small>Date: {{ invoice.invoice_date }}</small>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="invoice p-4 mb-4" style="border:1px solid #dee2e6; border-radius: .25rem;">
+            <!-- Header Info -->
+            <div class="row mb-4">
+                <div class="col-sm-6 border-right pr-4">
+                    <h5><i class="fas fa-building"></i> From</h5>
+                    <address>
+                        <strong>{{ owner.name }}</strong><br>
+                        {{ owner.address }}<br>
+                        Phone: {{ owner.phone }}<br>
+                        Email: {{ owner.email }}
+                    </address>
+                </div>
+                <div class="col-sm-6 pl-4">
+                    <h5><i class="fas fa-user"></i> To</h5>
+                    <address>
+                        <strong>{{ customer.name }}</strong><br>
+                        {{ customer.address }}<br>
+                        Phone: {{ customer.phone }}<br>
+                        Email: {{ customer.email }}
+                    </address>
+                </div>
+            </div>
+
+            <!-- Invoice Meta -->
+            <div class="row mb-4">
+                <div class="col-sm-4">
+                    <b>Invoice ID:</b> {{ invoice.invoice_id }}<br>
+                </div>
+                <div class="col-sm-4">
+                    <b>Due Date:</b> {{ invoice.due_date }}<br>
+                </div>
+                <div class="col-sm-4">
+                    <b>Status:</b> {{ invoice.payment_status }}<br>
+                    {% if invoice.payment_status == "Paid" and payment_date %}
+                    <b>Paid On:</b> {{ payment_date }}<br>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Items Table -->
+            <div class="row">
+                <div class="col-12 table-responsive">
+                    <table class="table table-bordered mb-4">
+                        <thead class="thead-light">
+                            <tr>
+                                <th style="width: 10%">#</th>
+                                <th>Product ID</th>
+                                <th style="width: 15%">Qty</th>
+                                <th style="width: 20%">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for it in items %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ it.product_name }}</td>
+                                <td>{{ it.quantity }}</td>
+                                <td>{{ it.subtotal }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Totals -->
+            <div class="row">
+                <div class="col-6"></div>
+                <div class="col-6">
+                    <table class="table">
+                        <tr>
+                            <th style="width:50%">Subtotal:</th>
+                            <td>{{ invoice.total_amount }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tax (0%)</th>
+                            <td>0.00</td>
+                        </tr>
+                        <tr>
+                            <th>Total:</th>
+                            <td>{{ invoice.total_amount }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="row no-print">
+            <div class="col-12">
+                <a href="{% url 'invoicing:list_invoices' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Invoices
+                </a>
+                <button onclick="window.print()" class="btn btn-primary float-right">
+                    <i class="fas fa-print"></i> Print
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

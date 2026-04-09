@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{% if is_edit %}Edit{% else %}New{% endif %} Product{% endblock %}
+{% block header %}{% if is_edit %}Edit{% else %}New{% endif %} Product{% endblock %}
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="card card-outline card-info">
+        <div class="card-body">
+            {{ form.non_field_errors }}
+            <div class="form-group">
+                {{ form.name.label_tag }} {{ form.name }}
+                {% for e in form.name.errors %}<div class="invalid-feedback d-block">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.description.label_tag }} {{ form.description }}
+                {% for e in form.description.errors %}<div class="invalid-feedback d-block">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.unit_price.label_tag }} {{ form.unit_price }}
+                {% for e in form.unit_price.errors %}<div class="invalid-feedback d-block">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="form-group form-check">
+                {{ form.is_available }} {{ form.is_available.label_tag }}
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">{% if is_edit %}Save{% else %}Create{% endif %}</button>
+            <a href="{% url 'invoicing:list_products' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+</form>
+{% endblock %}

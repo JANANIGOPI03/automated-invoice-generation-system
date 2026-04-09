@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Invoice #{{ invoice.invoice_id }}</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 20mm;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .info-table {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .info-table td {
+            vertical-align: top;
+            padding: 5px;
+        }
+
+        .info-table .label {
+            font-weight: bold;
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .items-table th,
+        .items-table td {
+            border: 1px solid #666;
+            padding: 8px;
+        }
+
+        .items-table th {
+            background-color: #eee;
+        }
+
+        .totals {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .totals td {
+            padding: 5px;
+        }
+
+        .totals .label {
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 10px;
+            color: #777;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Invoice #{{ invoice.invoice_id }}</h1>
+        <div>Date: {{ invoice.invoice_date|date:"F j, Y, g:i a" }}</div>
+    </div>
+
+    <table class="info-table">
+        <tr>
+            <td style="width:33%">
+                <div class="label">From:</div>
+                {{ owner.name }}<br>
+                {{ owner.address }}<br>
+                Phone: {{ owner.phone }}<br>
+                Email: {{ owner.email }}
+            </td>
+            <td style="width:33%">
+                <div class="label">To:</div>
+                {{ customer.name }}<br>
+                {{ customer.address }}<br>
+                Phone: {{ customer.phone }}<br>
+                Email: {{ customer.email }}
+            </td>
+            <td style="width:34%">
+                <div class="label">Invoice ID:</div> {{ invoice.invoice_id }}<br>
+                <div class="label">Due Date:</div> {{ invoice.due_date|date:"F j, Y, g:i a" }}<br>
+                <div class="label">Status:</div> {{ invoice.payment_status }}<br>
+                {% if payment_date %}
+                <div class="label">Paid On:</div> {{ payment_date|date:"F j, Y, g:i a" }}<br>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th style="width:5%">#</th>
+                <th style="width:45%">Product</th>
+                <th style="width:15%">Unit Price</th>
+                <th style="width:10%">Qty</th>
+                <th style="width:25%">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for it in items %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ it.product_name }}</td>
+                <td>{{ it.unit_price }}</td>
+                <td>{{ it.quantity }}</td>
+                <td>{{ it.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="totals">
+        <tr>
+            <td class="label" style="width:75%; text-align:right">Subtotal:</td>
+            <td>{{ invoice.total_amount }}</td>
+        </tr>
+        <tr>
+            <td class="label" style="text-align:right">Tax (0%):</td>
+            <td>0.00</td>
+        </tr>
+        <tr>
+            <td class="label" style="text-align:right">Total:</td>
+            <td>{{ invoice.total_amount }}</td>
+        </tr>
+    </table>
+
+    <div class="footer">
+        InvoiceSys &ndash; Generated on {{ now|date:"F j, Y, g:i a" }}<br>
+        &copy; {{ now|date:"Y" }} InvoiceSys. All rights reserved.
+    </div>
+</body>
+
+</html>

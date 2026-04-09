@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Edit Profile{% endblock %}
+{% block header %}Edit Profile{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <div class="card card-primary">
+        <div class="card-body">
+            <div class="form-group">
+                {{ form.name.label_tag }}
+                {{ form.name }}
+                {% if form.name.errors %}
+                <div class="invalid-feedback d-block">{{ form.name.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.phone.label_tag }}
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                <div class="invalid-feedback d-block">{{ form.phone.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.billing_address.label_tag }}
+                {{ form.billing_address }}
+                {% if form.billing_address.errors %}
+                <div class="invalid-feedback d-block">{{ form.billing_address.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-success">Save Changes</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

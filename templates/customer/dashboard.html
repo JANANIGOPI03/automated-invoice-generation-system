@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}My Dashboard{% endblock %}
+{% block header %}Welcome, {{ request.session.user_name }}{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>{{ invoices|length }}</h3>
+                <p>My Invoices</p>
+            </div>
+            <div class="icon"><i class="fas fa-file-invoice"></i></div>
+            <a href="{% url 'invoicing:customer_invoices' %}" class="small-box-footer">View <i
+                    class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>Profile</h3>
+                <p>View or edit your info</p>
+            </div>
+            <div class="icon"><i class="fas fa-user"></i></div>
+            <a href="{% url 'invoicing:customer_profile' %}" class="small-box-footer">Manage <i
+                    class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+</div>
+{% endblock %}

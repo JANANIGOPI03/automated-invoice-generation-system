@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block header %}Reports{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-4">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>{{ total_customers }}</h3>
+                <p>Total Customers</p>
+            </div>
+            <div class="icon"><i class="fas fa-users"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>{{ total_invoices }}</h3>
+                <p>Total Invoices</p>
+            </div>
+            <div class="icon"><i class="fas fa-file-invoice"></i></div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>{{ pending_invoices }}</h3>
+                <p>Pending Invoices</p>
+            </div>
+            <div class="icon"><i class="fas fa-clock"></i></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
